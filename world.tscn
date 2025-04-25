@@ -1,0 +1,144 @@
+[gd_scene load_steps=12 format=3 uid="uid://bvl4ny1hp8yjq"]
+
+[ext_resource type="Script" uid="uid://cvq4jqlve01vk" path="res://main_camera_3d.gd" id="1_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://cst3man2cc2uj" path="res://sea.tscn" id="2_tlwt5"]
+[ext_resource type="PackedScene" uid="uid://bo7fua7xro0p7" path="res://player_ship.tscn" id="3_aqk2v"]
+[ext_resource type="Script" uid="uid://cpy2dweim8b78" path="res://ui.gd" id="4_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://c741nmuoovqno" path="res://compass_test.png" id="5_036b0"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_aqk2v"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_036b0"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_tlwt5"]
+rayleigh_color = Color(0.194162, 0.273203, 0.98472, 1)
+mie_eccentricity = 0.97
+ground_color = Color(0.868268, 0.896445, 0.994619, 1)
+energy_multiplier = 4.0
+
+[sub_resource type="Sky" id="Sky_aqk2v"]
+sky_material = SubResource("PhysicalSkyMaterial_tlwt5")
+
+[sub_resource type="Environment" id="Environment_036b0"]
+background_mode = 2
+sky = SubResource("Sky_aqk2v")
+reflected_light_source = 2
+tonemap_mode = 4
+tonemap_exposure = 1.54
+ssr_enabled = true
+ssr_max_steps = 96
+ssr_fade_in = 0.974704
+ssr_fade_out = 0.594603
+ssr_depth_tolerance = 0.41
+adjustment_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dwbse"]
+exposure_multiplier = 1.494
+auto_exposure_scale = 1.12
+
+[node name="World" type="Node3D"]
+
+[node name="Rock" type="StaticBody3D" parent="."]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 12.6027)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Rock"]
+mesh = SubResource("SphereMesh_aqk2v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Rock"]
+shape = SubResource("SphereShape3D_036b0")
+
+[node name="FluidArea3D" parent="." instance=ExtResource("2_tlwt5")]
+
+[node name="PlayerShip" parent="." instance=ExtResource("3_aqk2v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.389302, 0)
+
+[node name="CameraController" type="Node3D" parent="PlayerShip"]
+script = ExtResource("1_aqk2v")
+
+[node name="MainCamera3D" type="Camera3D" parent="PlayerShip/CameraController"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.23998, -6.1387)
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_036b0")
+camera_attributes = SubResource("CameraAttributesPractical_dwbse")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.129228, 0.670032, -0.730998, -0.456332, 0.614299, 0.643738, 0.880376, 0.416766, 0.226372, -6.32318, 13.3628, 0)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("4_aqk2v")
+
+[node name="BuildLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Ships 3D test"
+
+[node name="HealthBarStack" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -221.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="Label2" type="Label" parent="UI/HealthBarStack"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Health:"
+
+[node name="HealthBar" type="ProgressBar" parent="UI/HealthBarStack"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="GameOverText" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 76
+text = "YOUR SHIP HAS SUNK"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AngleLabel" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 26.0
+offset_right = 86.0
+offset_bottom = 49.0
+text = "Angle test"
+
+[node name="CompassAnchor" type="Control" parent="UI"]
+anchors_preset = 0
+offset_top = 608.0
+offset_right = 40.0
+offset_bottom = 648.0
+
+[node name="Compass" type="TextureRect" parent="UI/CompassAnchor"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -256.0
+offset_right = 256.0
+grow_vertical = 0
+pivot_offset = Vector2(128, 128)
+texture = ExtResource("5_036b0")
+expand_mode = 2
+
+[connection signal="health_changed" from="PlayerShip" to="UI" method="_on_player_ship_health_changed"]

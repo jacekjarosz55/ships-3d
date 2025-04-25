@@ -1,0 +1,113 @@
+[gd_scene load_steps=16 format=3 uid="uid://bvl4ny1hp8yjq"]
+
+[ext_resource type="Script" uid="uid://cvq4jqlve01vk" path="res://main_camera_3d.gd" id="1_aqk2v"]
+[ext_resource type="Script" uid="uid://bquks5wj8s7yd" path="res://addons/floatable_body/fluid_area_3d.gd" id="1_tlwt5"]
+[ext_resource type="Script" uid="uid://c6xbdpytqxnm" path="res://player_ship.gd" id="2_aqk2v"]
+[ext_resource type="ArrayMesh" uid="uid://caqkav1sbb5o4" path="res://Ships by @Quaternius/OBJ/Sail ship.obj" id="2_tlwt5"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tlwt5"]
+frequency = 0.0042
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_aqk2v"]
+width = 1024
+height = 1024
+invert = true
+seamless = true
+seamless_blend_skirt = 0.376
+as_normal_map = true
+bump_strength = 24.0
+noise = SubResource("FastNoiseLite_tlwt5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_036b0"]
+albedo_color = Color(0.422285, 0.625719, 0.729257, 1)
+metallic = 1.0
+roughness = 0.25
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_aqk2v")
+uv1_scale = Vector3(8, 8, 8)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dwbse"]
+material = SubResource("StandardMaterial3D_036b0")
+size = Vector2(128, 128)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tlwt5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_aqk2v"]
+size = Vector3(1.23291, 1, 4.70831)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_tlwt5"]
+rayleigh_color = Color(0.194162, 0.273203, 0.98472, 1)
+mie_eccentricity = 0.97
+ground_color = Color(0.868268, 0.896445, 0.994619, 1)
+energy_multiplier = 4.0
+
+[sub_resource type="Sky" id="Sky_aqk2v"]
+sky_material = SubResource("PhysicalSkyMaterial_tlwt5")
+
+[sub_resource type="Environment" id="Environment_036b0"]
+background_mode = 2
+sky = SubResource("Sky_aqk2v")
+reflected_light_source = 2
+tonemap_mode = 4
+tonemap_exposure = 1.54
+ssr_enabled = true
+ssr_max_steps = 96
+ssr_fade_in = 0.974704
+ssr_fade_out = 0.594603
+ssr_depth_tolerance = 0.41
+adjustment_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dwbse"]
+exposure_multiplier = 1.494
+auto_exposure_scale = 1.12
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tlwt5"]
+size = Vector3(20.428, 13.6333, 19.8364)
+
+[node name="World" type="Node3D"]
+
+[node name="CameraController" type="Node3D" parent="."]
+transform = Transform3D(-1, -1.11341e-14, -8.74227e-08, -2.43345e-08, 0.960478, 0.278354, 8.39676e-08, 0.278354, -0.960478, 0, 3.02902, -6.10895)
+script = ExtResource("1_aqk2v")
+
+[node name="MainCamera3D" type="Camera3D" parent="CameraController"]
+transform = Transform3D(1, 1.06581e-14, -3.55271e-14, -7.10543e-15, 1, 2.98023e-08, 3.55271e-14, 0, 1, 0, 0, 7.128)
+current = true
+
+[node name="FluidArea3D" type="Area3D" parent="."]
+script = ExtResource("1_tlwt5")
+density = 0.3
+metadata/_custom_type_script = "uid://bquks5wj8s7yd"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FluidArea3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("PlaneMesh_dwbse")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="FluidArea3D"]
+shape = SubResource("WorldBoundaryShape3D_tlwt5")
+
+[node name="PlayerShip" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.389302, 0)
+script = ExtResource("2_aqk2v")
+metadata/_custom_type_script = "uid://cgeixdbsiliy5"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerShip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.513855, 0)
+mesh = ExtResource("2_tlwt5")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerShip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974005, -0.0506287)
+shape = SubResource("BoxShape3D_aqk2v")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_036b0")
+camera_attributes = SubResource("CameraAttributesPractical_dwbse")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.129228, 0.670032, -0.730998, -0.456332, 0.614299, 0.643738, 0.880376, 0.416766, 0.226372, -6.32318, 13.3628, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.357973, -6.31665, -0.897705)
+shape = SubResource("BoxShape3D_tlwt5")
