@@ -64,13 +64,13 @@ auto_exposure_scale = 1.12
 
 [node name="World" type="Node3D"]
 
-[node name="Rock" type="StaticBody3D" parent="."]
+[node name="CollisionTest" type="StaticBody3D" parent="."]
 transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 12.6027)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Rock"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionTest"]
 mesh = SubResource("SphereMesh_aqk2v")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Rock"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionTest"]
 shape = SubResource("SphereShape3D_036b0")
 
 [node name="FluidArea3D" parent="." instance=ExtResource("2_tlwt5")]
@@ -83,13 +83,13 @@ skeleton = NodePath("../../PlayerShip")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.317759, 0)
 
 [node name="CameraController" type="Node3D" parent="PlayerShip"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8509, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.81456, 0)
 script = ExtResource("1_aqk2v")
 
 [node name="RotationHelper" type="Node3D" parent="PlayerShip/CameraController"]
 
 [node name="MainCamera3D" type="Camera3D" parent="PlayerShip/CameraController/RotationHelper"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -6.139)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -7.139)
 current = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
