@@ -1,27 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://cst3man2cc2uj"]
+[gd_scene load_steps=3 format=3 uid="uid://cst3man2cc2uj"]
 
 [ext_resource type="Script" uid="uid://bquks5wj8s7yd" path="res://addons/floatable_body/fluid_area_3d.gd" id="1_xwcm7"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_xwcm7"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cd1ay"]
-width = 1024
-height = 1024
-in_3d_space = true
-seamless = true
-as_normal_map = true
-noise = SubResource("FastNoiseLite_xwcm7")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwcm7"]
-metallic = 1.0
-metallic_specular = 1.0
-roughness = 0.0
-normal_enabled = true
-normal_texture = SubResource("NoiseTexture2D_cd1ay")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_dwbse"]
-material = SubResource("StandardMaterial3D_xwcm7")
-size = Vector2(128, 128)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tlwt5"]
 
@@ -29,10 +8,6 @@ size = Vector2(128, 128)
 script = ExtResource("1_xwcm7")
 density = 0.3
 metadata/_custom_type_script = "uid://bquks5wj8s7yd"
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
-mesh = SubResource("PlaneMesh_dwbse")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("WorldBoundaryShape3D_tlwt5")

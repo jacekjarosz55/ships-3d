@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvl4ny1hp8yjq"]
+[gd_scene load_steps=16 format=3 uid="uid://bvl4ny1hp8yjq"]
 
 [ext_resource type="Script" uid="uid://cvq4jqlve01vk" path="res://main_camera_3d.gd" id="1_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://cst3man2cc2uj" path="res://sea.tscn" id="2_tlwt5"]
@@ -9,6 +9,31 @@
 [sub_resource type="SphereMesh" id="SphereMesh_aqk2v"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_036b0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_xwcm7"]
+fractal_octaves = 8
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_036b0"]
+width = 1024
+height = 1024
+in_3d_space = true
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_xwcm7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwcm7"]
+metallic = 1.0
+metallic_specular = 1.0
+roughness = 0.0
+normal_enabled = true
+normal_texture = SubResource("NoiseTexture2D_036b0")
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dwbse"]
+material = SubResource("StandardMaterial3D_xwcm7")
+size = Vector2(128, 128)
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_tlwt5"]
 rayleigh_color = Color(0.194162, 0.273203, 0.98472, 1)
@@ -49,13 +74,20 @@ shape = SubResource("SphereShape3D_036b0")
 
 [node name="FluidArea3D" parent="." instance=ExtResource("2_tlwt5")]
 
+[node name="SeaSurface" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.639302, 0)
+mesh = SubResource("PlaneMesh_dwbse")
+skeleton = NodePath("../PlayerShip")
+
 [node name="PlayerShip" parent="." instance=ExtResource("3_aqk2v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.389302, 0)
 
 [node name="CameraController" type="Node3D" parent="PlayerShip"]
 script = ExtResource("1_aqk2v")
 
-[node name="MainCamera3D" type="Camera3D" parent="PlayerShip/CameraController"]
+[node name="RotationHelper" type="Node3D" parent="PlayerShip/CameraController"]
+
+[node name="MainCamera3D" type="Camera3D" parent="PlayerShip/CameraController/RotationHelper"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.23998, -6.1387)
 current = true
 

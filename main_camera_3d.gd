@@ -1,10 +1,9 @@
 extends Node3D
 
-@onready
-var player = $"..";
-
 @export
-var SENSITIVITY = 0.001;
+var SENSITIVITY = 0.001
+@onready
+var rotation_helper = $RotationHelper
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -12,4 +11,5 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		rotate_y(event.relative.x * -SENSITIVITY);
+		global_rotate(Vector3.UP, event.relative.x * -SENSITIVITY)
+		rotation_helper.rotate_x(event.relative.y * SENSITIVITY)
