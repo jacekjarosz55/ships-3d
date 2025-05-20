@@ -1,6 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://bvl4ny1hp8yjq"]
+[gd_scene load_steps=17 format=3 uid="uid://bvl4ny1hp8yjq"]
 
 [ext_resource type="Script" uid="uid://cvq4jqlve01vk" path="res://main_camera_3d.gd" id="1_aqk2v"]
+[ext_resource type="PackedScene" uid="uid://c25uqfaqv1ctn" path="res://crate.tscn" id="1_dwbse"]
 [ext_resource type="PackedScene" uid="uid://cst3man2cc2uj" path="res://sea.tscn" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bo7fua7xro0p7" path="res://player_ship.tscn" id="3_aqk2v"]
 [ext_resource type="Script" uid="uid://cpy2dweim8b78" path="res://ui.gd" id="4_aqk2v"]
@@ -74,21 +75,21 @@ shape = SubResource("SphereShape3D_036b0")
 
 [node name="FluidArea3D" parent="." instance=ExtResource("2_tlwt5")]
 
-[node name="SeaSurface" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.639302, 0)
+[node name="SeaSurface" type="MeshInstance3D" parent="FluidArea3D"]
 mesh = SubResource("PlaneMesh_dwbse")
-skeleton = NodePath("../PlayerShip")
+skeleton = NodePath("../../PlayerShip")
 
 [node name="PlayerShip" parent="." instance=ExtResource("3_aqk2v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.389302, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.317759, 0)
 
 [node name="CameraController" type="Node3D" parent="PlayerShip"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8509, 0)
 script = ExtResource("1_aqk2v")
 
 [node name="RotationHelper" type="Node3D" parent="PlayerShip/CameraController"]
 
 [node name="MainCamera3D" type="Camera3D" parent="PlayerShip/CameraController/RotationHelper"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.23998, -6.1387)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -6.139)
 current = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -172,5 +173,9 @@ grow_vertical = 0
 pivot_offset = Vector2(128, 128)
 texture = ExtResource("5_036b0")
 expand_mode = 2
+
+[node name="Crate" parent="." instance=ExtResource("1_dwbse")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.84797, 1.01953, 0)
+mass = 0.057
 
 [connection signal="health_changed" from="PlayerShip" to="UI" method="_on_player_ship_health_changed"]
