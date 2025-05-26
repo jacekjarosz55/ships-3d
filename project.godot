@@ -13,7 +13,7 @@ config_version=5
 config/name="Ships 3d"
 run/main_scene="uid://bvl4ny1hp8yjq"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://ce7xuervr803g"
 
 [dotnet]
 
