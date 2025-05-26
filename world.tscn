@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bvl4ny1hp8yjq"]
+[gd_scene load_steps=19 format=3 uid="uid://bvl4ny1hp8yjq"]
 
 [ext_resource type="PackedScene" uid="uid://c25uqfaqv1ctn" path="res://crate.tscn" id="1_dwbse"]
 [ext_resource type="PackedScene" uid="uid://cst3man2cc2uj" path="res://sea.tscn" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bo7fua7xro0p7" path="res://player_ship.tscn" id="3_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://bo0a5inresyuh" path="res://kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="3_wse8f"]
 [ext_resource type="Script" uid="uid://cpy2dweim8b78" path="res://ui.gd" id="4_aqk2v"]
 [ext_resource type="Texture2D" uid="uid://c741nmuoovqno" path="res://compass_test.png" id="5_036b0"]
 [ext_resource type="Texture2D" uid="uid://bti772ge27ndm" path="res://crosshair.svg" id="6_pkg7o"]
@@ -36,14 +37,11 @@ uv1_world_triplanar = true
 material = SubResource("StandardMaterial3D_xwcm7")
 size = Vector2(128, 128)
 
-[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_tlwt5"]
-rayleigh_color = Color(0.194162, 0.273203, 0.98472, 1)
-mie_eccentricity = 0.97
-ground_color = Color(0.868268, 0.896445, 0.994619, 1)
-energy_multiplier = 4.0
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ic0uy"]
+panorama = ExtResource("3_wse8f")
 
 [sub_resource type="Sky" id="Sky_aqk2v"]
-sky_material = SubResource("PhysicalSkyMaterial_tlwt5")
+sky_material = SubResource("PanoramaSkyMaterial_ic0uy")
 
 [sub_resource type="Environment" id="Environment_036b0"]
 background_mode = 2
@@ -80,7 +78,7 @@ environment = SubResource("Environment_036b0")
 camera_attributes = SubResource("CameraAttributesPractical_dwbse")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.129228, 0.670032, -0.730998, -0.456332, 0.614299, 0.643738, 0.880376, 0.416766, 0.226372, -6.32318, 13.3628, 0)
+transform = Transform3D(-0.330435, 0.865571, -0.376297, -0.203214, 0.324095, 0.923941, 0.921692, 0.381771, 0.0688041, -6.32318, 13.3628, 0)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
