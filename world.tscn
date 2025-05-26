@@ -23,7 +23,7 @@ as_normal_map = true
 noise = SubResource("FastNoiseLite_xwcm7")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xwcm7"]
-albedo_color = Color(0.414006, 0.434812, 0.452457, 1)
+albedo_color = Color(0.489659, 0.535981, 0.540564, 1)
 metallic = 1.0
 metallic_specular = 1.0
 roughness = 0.0
@@ -35,7 +35,7 @@ uv1_world_triplanar = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dwbse"]
 material = SubResource("StandardMaterial3D_xwcm7")
-size = Vector2(128, 128)
+size = Vector2(1024, 1024)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ic0uy"]
 panorama = ExtResource("3_wse8f")
@@ -48,13 +48,23 @@ background_mode = 2
 sky = SubResource("Sky_aqk2v")
 reflected_light_source = 2
 tonemap_mode = 4
-tonemap_exposure = 1.36
 ssr_enabled = true
-ssr_max_steps = 96
-ssr_fade_in = 1.0815
-ssr_fade_out = 0.594603
+ssr_max_steps = 128
+ssr_fade_in = 0.126133
+ssr_fade_out = 0.071794
 ssr_depth_tolerance = 0.41
+ssil_radius = 5.36
+ssil_intensity = 7.11
 glow_enabled = true
+glow_levels/6 = 0.74
+glow_levels/7 = 0.65
+glow_intensity = 0.16
+glow_strength = 0.76
+glow_blend_mode = 1
+glow_hdr_scale = 3.98
+fog_enabled = true
+fog_density = 0.001
+fog_aerial_perspective = 1.0
 adjustment_enabled = true
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_dwbse"]
@@ -99,12 +109,17 @@ text = "Ships 3D test"
 
 [node name="HealthBarStack" type="HBoxContainer" parent="UI"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -221.0
-offset_bottom = 40.0
+anchor_bottom = 1.0
+offset_left = -264.0
+offset_top = -80.0
+offset_right = -43.0
+offset_bottom = -40.0
 grow_horizontal = 0
+grow_vertical = 0
 
 [node name="Label2" type="Label" parent="UI/HealthBarStack"]
 layout_mode = 2
@@ -128,14 +143,6 @@ theme_override_font_sizes/font_size = 76
 text = "YOUR SHIP HAS SUNK"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="AngleLabel" type="Label" parent="UI"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 26.0
-offset_right = 86.0
-offset_bottom = 49.0
-text = "Angle test"
 
 [node name="CompassAnchor" type="Control" parent="UI"]
 anchors_preset = 0
@@ -180,8 +187,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -118.0
+offset_top = 20.0
 offset_right = 118.0
-offset_bottom = 27.0
+offset_bottom = 47.0
 grow_horizontal = 2
 max_value = 1.0
 show_percentage = false

@@ -6,9 +6,6 @@ var healthbar = $HealthBarStack/HealthBar
 @onready
 var cooldown_bar = $CooldownBar
 
-@onready 
-var angle_label = $AngleLabel
-
 @onready
 var compass: TextureRect = $CompassAnchor/Compass
 
@@ -21,7 +18,7 @@ var player = $"../PlayerShip"
 
 
 func _process(delta:float) -> void:
-	angle_label.text = "Angle: %f" % camera.global_rotation_degrees.y
+	
 	compass.rotation = camera.global_rotation.y
 	healthbar.max_value = player.HEALTH
 	healthbar.value = player.health
