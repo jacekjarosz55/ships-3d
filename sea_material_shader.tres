@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://y67au3ano2ij"]
+
+[ext_resource type="Shader" uid="uid://d0ebkt3wgvmu8" path="res://sea_material_shader.gdshader" id="1_dc0lp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dc0lp"]
+frequency = 0.0104
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rir78"]
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_dc0lp")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kfg3d"]
+frequency = 0.008
+fractal_octaves = 6
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vy681"]
+width = 1024
+height = 1024
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_kfg3d")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_dc0lp")
+shader_parameter/noise = SubResource("NoiseTexture2D_rir78")
+shader_parameter/noise2 = SubResource("NoiseTexture2D_vy681")

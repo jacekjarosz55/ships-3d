@@ -15,6 +15,13 @@ run/main_scene="uid://bvl4ny1hp8yjq"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://ce7xuervr803g"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=3
+window/stretch/mode="viewport"
+
 [dotnet]
 
 project/assembly_name="Ships 3d"
@@ -61,6 +68,4 @@ shoot={
 
 [rendering]
 
-anti_aliasing/quality/msaa_3d=1
 anti_aliasing/quality/screen_space_aa=1
-anti_aliasing/quality/use_taa=true
