@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cst3man2cc2uj"]
+
+[ext_resource type="Script" uid="uid://bquks5wj8s7yd" path="res://addons/floatable_body/fluid_area_3d.gd" id="1_xwcm7"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_tlwt5"]
+
+[node name="Sea" type="Area3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_xwcm7")
+density = 0.3
+metadata/_custom_type_script = "uid://bquks5wj8s7yd"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("WorldBoundaryShape3D_tlwt5")

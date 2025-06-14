@@ -17,7 +17,7 @@ config/icon="uid://ce7xuervr803g"
 
 [autoload]
 
-GameData="*res://game_data.gd"
+GameData="*res://scripts/game_data.gd"
 
 [display]
 

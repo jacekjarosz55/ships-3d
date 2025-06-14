@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://d26bvnrsfionx"]
+
+[ext_resource type="Texture2D" uid="uid://iffiavthevit" path="res://assets/bang.svg" id="1_nxh03"]
+[ext_resource type="Script" uid="uid://cxpmys2wdersq" path="res://scripts/bang_effect.gd" id="2_3oo56"]
+
+[node name="BangEffect" type="Sprite3D"]
+layers = 3
+billboard = 1
+no_depth_test = true
+texture = ExtResource("1_nxh03")
+script = ExtResource("2_3oo56")
+
+[node name="DieTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="DieTimer" to="." method="_on_die_timer_timeout"]

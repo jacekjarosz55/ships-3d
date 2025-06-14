@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://byr1g3ypt254a"]
-
-[ext_resource type="Script" uid="uid://deb4t1e51v8sa" path="res://ball_destroyer.gd" id="1_dclth"]
-
-[node name="BallDestroyer" type="Area3D"]
-script = ExtResource("1_dclth")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

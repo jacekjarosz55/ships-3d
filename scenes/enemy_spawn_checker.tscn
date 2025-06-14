@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2qh0ys657k1t"]
+
+[ext_resource type="Script" uid="uid://dw2gh2a5chgrq" path="res://scripts/enemy_spawn_checker.gd" id="1_cvpin"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_crvya"]
+radius = 1.95089
+
+[node name="EnemySpawnChecker" type="Area3D"]
+collision_layer = 13
+collision_mask = 13
+script = ExtResource("1_cvpin")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_crvya")
