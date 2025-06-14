@@ -25,5 +25,6 @@ func _process(delta:float) -> void:
 	cooldown_bar.value = cooldown_timer.time_left /  cooldown_timer.wait_time
 	
 	
-	if player.health <= 0:
+	if player.health <= 0 and $GameOverText.hidden:
+		$GameOverText.text = "Game over!\nDestroyed enemies: {0}\nSeconds survived: {1}".format([GameData.destroyed_enemies, floor(GameData.get_secs_elapsed())]) 
 		$GameOverText.show()

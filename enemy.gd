@@ -4,6 +4,12 @@ var health = 100;
 
 var players: Array[FloatableBody3D] = []
 
+func _ready() -> void:
+	players = []
+	for player in $"/root/World/Players".get_children():
+		players.append(player)
+	super()
+
 func update_players(new_players):
 	players = []
 	for player in new_players:
@@ -24,10 +30,10 @@ func get_closest_player():
 #var player = get_node(player_path)
 
 @export
-var CANNON_BALL_SCENE: PackedScene
+var CANNON_BALL_SCENE: PackedScene = preload("res://cannonball.tscn")
 
 @export
-var CANNON_BALL_SPAWN_PATH: NodePath
+var CANNON_BALL_SPAWN_PATH: NodePath = "/root/World"
 
 @onready
 var cannon_ball_spawn_path = get_node(CANNON_BALL_SPAWN_PATH)
@@ -55,6 +61,7 @@ func _on_hitbox_body_entered(body: Node3D) -> void:
 			attack_timer.autostart = false;
 			attack_timer.stop()
 			mass = 1.0;
+			GameData.destroyed_enemies += 1
 			var timer = get_tree().create_timer(2.0).connect("timeout", die)
 
 

@@ -2,6 +2,8 @@ extends Node3D
 
 const SPAWN_RANDOM := 40.0
 
+
+
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	# We only need to spawn players on the server.
@@ -18,7 +20,8 @@ func _ready():
 	# Spawn the local player unless this is a dedicated server export.
 	if not OS.has_feature("dedicated_server"):
 		add_player(1)
-
+	$EnemySpawner.start()
+	GameData.measure_start()
 
 func _exit_tree():
 	if not multiplayer.is_server():
