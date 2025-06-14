@@ -10,15 +10,14 @@ var cooldown_bar = $CooldownBar
 var compass: TextureRect = $CompassAnchor/Compass
 
 
-@onready
-var camera = get_viewport().get_camera_3d()
 
-@onready
-var player = $"../PlayerShip"
+var camera = null
+var player = null
 
 
 func _process(delta:float) -> void:
-	
+	if player == null:
+		return
 	compass.rotation = camera.global_rotation.y
 	healthbar.max_value = player.HEALTH
 	healthbar.value = player.health

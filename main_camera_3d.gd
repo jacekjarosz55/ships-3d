@@ -11,9 +11,7 @@ var camera = $RotationHelper/MainCamera3D
 @onready
 var target_fov: float = camera.fov;
 
-func _ready() -> void:
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
+
 
 func _process(delta: float) -> void:
 	camera.fov = lerp(camera.fov, target_fov, 1 - 0.2 ** delta) 

@@ -26,11 +26,21 @@ var shoot_cooldown_timer = $ShootCooldownTimer
 var CANNONBALL_SPAWN_PATH: NodePath
 
 @onready
-var cannonball_spawn = get_node(CANNONBALL_SPAWN_PATH)
+var cannonball_spawn = get_node("../../")
 
 signal health_changed(health: float, max_health: float)
 
 var health : set = _set_health
+
+# Set by the authority, synchronized on spawn.
+@export var player := 1 :
+	set(id):
+		player = id
+		# Give authority over the player input to the appropriate peer.
+		$PlayerInput.set_multiplayer_authority(id)
+
+# Player synchronized input.
+@onready var input = $PlayerInput
 
 func shoot():
 	shoot_cooldown_timer.start()
@@ -40,6 +50,10 @@ func shoot():
 	
 func _ready():
 	health = HEALTH
+	if player == multiplayer.get_unique_id():
+		camera.current = true
+		
+	# Only process on server.
 	super()
 
 func _set_health(val):
@@ -51,16 +65,17 @@ func _set_health(val):
 func _physics_process(delta: float) -> void:
 	move_speed = move_toward(move_speed, 0, 0.05 * delta)
 	if health > 0:
-		if Input.is_action_pressed("forward"): 
+		if input.direction.y < 0:
 			move_speed = move_toward(move_speed, MOVE_MAX_SPEED, MOVE_ACCEL * delta)
-		if Input.is_action_pressed("backward"):
+		if input.direction.y > 0:
 			move_speed = move_toward(move_speed, -MOVE_MAX_SPEED*0.6, MOVE_ACCEL * delta)
-		if Input.is_action_pressed("left"):
+		if input.direction.x < 0:
 			angular_velocity.y+=ROT_SPEED*move_speed/MOVE_MAX_SPEED;
-		if Input.is_action_pressed("right"):
+		if input.direction.x > 0:
 			angular_velocity.y-=ROT_SPEED*move_speed/MOVE_MAX_SPEED;
-		if Input.is_action_just_pressed("shoot") and shoot_cooldown_timer.is_stopped():
+		if input.shooting and shoot_cooldown_timer.is_stopped():
 			shoot()
+	input.shooting = false
 	linear_velocity += global_transform.basis * Vector3(0,0,move_speed)
 	super(delta)
 

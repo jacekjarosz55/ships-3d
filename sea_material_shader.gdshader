@@ -17,7 +17,7 @@ void fragment() {
 		texture(noise, vec2(UV*8.0+TIME/100.0)).rgb,
 		texture(noise2, vec2(UV*8.0-TIME/300.0)).rgb, 0.5
 		);
-	
+
 	METALLIC = 1.0;
 	ROUGHNESS = 0.0;
 	//NORMAL_MAP = (texture(noise, vec2(UV+TIME/1000.0)).rgb + texture(noise2, vec2(UV-TIME/2000.0)).rgb)*0.5;
